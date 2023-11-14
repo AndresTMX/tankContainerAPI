@@ -19,10 +19,24 @@ class UserFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
+
     {
+
+         // Define un array de roles
+         $roles = ['admin', 'developer', 'vigilante', 'Maniobrista', 'Reparador', 'Lavador', 'Gestor de calidad'];
+
+         // Reorganiza aleatoriamente el array de roles
+         shuffle($roles);
+        // Toma el primer rol del array reorganizado
+         $randomRole = reset($roles);
+
+
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'rol'=> $randomRole,
+            'phone'=> fake()->phoneNumber(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
