@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Register;
 use Illuminate\Http\Request;
+use App\Http\Resources\v1\registerResource;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class register_controller extends Controller
 {
@@ -13,7 +16,12 @@ class register_controller extends Controller
      */
     public function index()
     {
-       //
+        $registers = Register::all();
+
+        return response()->json([
+            'status' => Response::HTTP_OK,
+            'data' =>  registerResource::collection($registers),
+        ]);
     }
 
     /**
@@ -29,7 +37,7 @@ class register_controller extends Controller
      */
     public function show(register $register)
     {
-        return $register;
+        return new registerResource($register);
     }
 
     /**
